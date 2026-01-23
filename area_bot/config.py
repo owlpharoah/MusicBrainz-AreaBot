@@ -1,0 +1,24 @@
+TARGET = "Q1186"
+MAX_DEPTH = 2
+ALLOWED_INSTANCES = [
+   "Q1549591",    # big city
+   "Q200250",     # metropolis
+   "Q208511",     # municipal corporation (India)
+   "Q7930989",    # municipal council (India)
+   "Q2497151",    # nagar panchayat
+   "Q1149652",     #district of india
+   "Q12443800"     #state of india
+]
+
+#Instances we climb past
+SKIPPED_INSTANCES = {
+    "Q17507349",    # historical administrative division
+    "Q3504248",     # administrative territorial entity
+}
+
+#Instances that terminate hierarchy
+ROOT_INSTANCES = {
+    "Q6256",        # country
+    "Q5255892",     # sovereign state
+    "Q12443800",    # State of India
+}
