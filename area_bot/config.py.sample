@@ -5,7 +5,7 @@ PG_USER = "musicbrainz"
 PG_PORT = 5432
 
 
-TARGET = "Q1437"
+TARGET = "Q159"
 MAX_DEPTH = 2
 ALLOWED_INSTANCES = [
    "Q1549591",    # big city

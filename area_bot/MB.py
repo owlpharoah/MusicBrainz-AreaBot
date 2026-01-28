@@ -1,15 +1,11 @@
 import pandas as pd
 import sqlalchemy as sa
+from config import PG_HOST,PG_DATABASE,PG_PASSWORD,PG_PORT,PG_USER
 
 #gets all areas in mb with wikidata
 def get_mb_areas_w_wikidata() -> pd.DataFrame :
-    HOST = "localhost"
-    DATABASE = "musicbrainz_db"
-    PASSWORD = "musicbrainz"
-    USER = "musicbrainz"
-    PORT = 5432
 
-    sa_conn_str = f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:{PORT}/{DATABASE}"
+    sa_conn_str = f"postgresql+psycopg2://{PG_USER}:{PG_PASSWORD}@{PG_HOST}:{PG_PORT}/{PG_DATABASE}"
     engine = sa.create_engine(sa_conn_str)
 
     with engine.connect() as conn:

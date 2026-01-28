@@ -12,3 +12,5 @@ data/*
 apicache-py3/
 log.json
 throttle.ctrl
+
+area_bot/config.py
