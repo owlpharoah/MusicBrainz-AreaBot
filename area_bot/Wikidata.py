@@ -41,22 +41,29 @@ def make_subdivision_query(division_identifier: str,allowed_instance_qids: list[
     """
 
 def get_parent_and_instance(qid) -> pd.DataFrame:
-    """Fetches parent QID and the instance type of that parent"""
     query = f"""
     PREFIX wd: <http://www.wikidata.org/entity/>
     PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+    PREFIX p: <http://www.wikidata.org/prop/>
+    PREFIX ps: <http://www.wikidata.org/prop/statement/>
+    PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-
+    
     SELECT ?label ?parent ?parentInstance WHERE {{
-        BIND(wd:{qid} AS ?area)
-        ?area rdfs:label ?label . FILTER(LANG(?label) = "en")
+      BIND(wd:{qid} AS ?area)
+      ?area rdfs:label ?label .
+      FILTER(LANG(?label) = "en")
+      
+      OPTIONAL {{
+        ?area p:P131 ?statement .
+        ?statement ps:P131 ?parent .
+        FILTER NOT EXISTS {{ ?statement pq:P582 ?endTime }}
+        
         OPTIONAL {{
-            ?area wdt:P131 ?parent .
-            OPTIONAL {{
-                ?parent wdt:P31 ?pinst .
-                BIND(STRAFTER(STR(?pinst), "entity/") AS ?parentInstance)
-            }}
+          ?parent wdt:P31 ?pinst .
+          BIND(STRAFTER(STR(?pinst), "entity/") AS ?parentInstance)
         }}
+      }}
     }}
     LIMIT 1
     """
